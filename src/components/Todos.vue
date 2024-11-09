@@ -11,7 +11,8 @@
         type="checkbox"
         name="check"
         :id="todo.id"
-        v-model="todo.completed"
+        @change="$emit('toggle', todo.id)"
+        :checked="todo.completed"
       />
       <label :for="todo.id">
         {{ todo.title }}
@@ -21,6 +22,7 @@
 </template>
 
 <script setup>
+// const emit = defineEmits(["toggle"]);
 const props = defineProps({
   todos: {
     type: Array,
@@ -32,6 +34,10 @@ const props = defineProps({
     default: 0,
   },
 });
+
+// function change(id) {
+//   emit("toggle", id);
+// }
 </script>
 
 <style>

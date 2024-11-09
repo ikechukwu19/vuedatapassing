@@ -3,7 +3,7 @@
     <h2>Todos</h2>
     <div class="wrapper">
       <AddTodo @addTodo="addTodo2" />
-      <Todos :todos="todos" :activeTodos="activeTodos" />
+      <Todos :todos="todos" :activeTodos="activeTodos" @toggle="toggleTodo" />
       <!-- <form @submit.prevent="addTodo">
         <input type="text" placeholder="Enter todo" v-model="newTodo" />
         <button>Add Todo</button>
@@ -63,12 +63,12 @@ const todos = ref([
 ]);
 
 const activeTodos = computed(() => {
-  const active = todos.value.filter((todo) => todo.completed == false);
+  const active = todos.value.filter((todo) => todo.completed === false);
   return active.length;
 });
 
 function addTodo2(data) {
-  if (data == "") return window.alert("Todo cannot be empty");
+  if (data === "") return window.alert("Todo cannot be empty");
   todos.value.push({
     id: todos.value.length + 1,
     title: data,
@@ -76,8 +76,16 @@ function addTodo2(data) {
   });
 }
 
+function toggleTodo(id) {
+  todos.value.forEach((todo) => {
+    if (todo.id === id) {
+      todo.completed = !todo.completed;
+    }
+  });
+}
+
 const addTodo = () => {
-  if (newTodo.value == "") return window.alert("Todo cannot be empty");
+  if (newTodo.value === "") return window.alert("Todo cannot be empty");
   todos.value.push({
     id: todos.value.length + 1,
     title: newTodo.value,
